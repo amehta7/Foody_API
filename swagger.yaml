@@ -1,0 +1,330 @@
+openapi: 3.0.0
+info:
+  title: Foody_API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://foody-api-01.herokuapp.com/api/v1
+    variables: {}
+paths:
+  /recipes:
+    get:
+      tags:
+        - Recipes
+      summary: Get All Recipes/ Get Recipes by sorting with name or rating / Get Recipes by searching name
+      operationId: GetAllRecipes/GetRecipesbysortingwithnameorrating/GetRecipesbysearchingname
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    post:
+      tags:
+        - Recipes
+      summary: Create Recipe
+      operationId: CreateRecipe
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CreateRecipeRequest'
+                - example:
+                    name: final_bbena
+                    description: '1'
+                    category: Indian
+            example:
+              name: final_bbena
+              description: '1'
+              category: Indian
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /recipes/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The recipe ID
+    get:
+      tags:
+        - Recipes
+      summary: Get Single Recipe By Id
+      operationId: GetSingleRecipeById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+
+    delete:
+      tags:
+        - Recipes
+      summary: Delete Recipe
+      operationId: DeleteRecipe
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Recipes
+      summary: Update Recipe / Update Rating of Recipe
+      operationId: UpdateRecipe/UpdateRatingofRecipe
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateRecipeUpdateRatingofRecipeRequest'
+                - example:
+                    rating: 4.8
+            example:
+              rating: 4.8
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+  /recipes/addIngredient/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The recipe ID
+    post:
+      tags:
+        - Recipes
+      summary: Add Ingredient in Specific Recipe
+      operationId: AddIngredientinSpecificRecipe
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/AddIngredientinSpecificRecipeRequest'
+                - example:
+                    ingredients:
+                      - '1'
+                      - '2'
+                      - '3'
+            example:
+              ingredients:
+                - '1'
+                - '2'
+                - '3'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginUserRequest'
+                - example:
+                    email: beena@gmail.com
+                    password: secretabc
+            example:
+              email: beena@gmail.com
+              password: secretabc
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/changePassword:
+    patch:
+      tags:
+        - Auth
+      summary: Change Password of User
+      operationId: ChangePasswordofUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ChangePasswordofUserRequest'
+                - example:
+                    password: secretabc
+            example:
+              password: secretabc
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Sign Up User/ Register User
+      operationId: SignUpUser/RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/SignUpUserRegisterUserRequest'
+                - example:
+                    name: Ramesh
+                    email: ramesh@gmail.com
+                    password: secret
+            example:
+              name: Ramesh
+              email: ramesh@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    CreateRecipeRequest:
+      title: CreateRecipeRequest
+      required:
+        - name
+        - description
+        - category
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+      example:
+        name: final_bbena
+        description: '1'
+        category: Indian
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: beena@gmail.com
+        password: secretabc
+    UpdateRecipeUpdateRatingofRecipeRequest:
+      title: UpdateRecipeUpdateRatingofRecipeRequest
+      required:
+        - rating
+      type: object
+      properties:
+        rating:
+          type: number
+      example:
+        rating: 4.8
+    ChangePasswordofUserRequest:
+      title: ChangePasswordofUserRequest
+      required:
+        - password
+      type: object
+      properties:
+        password:
+          type: string
+      example:
+        password: secretabc
+    AddIngredientinSpecificRecipeRequest:
+      title: AddIngredientinSpecificRecipeRequest
+      required:
+        - ingredients
+      type: object
+      properties:
+        ingredients:
+          type: array
+          items:
+            type: string
+          description: ''
+      example:
+        ingredients:
+          - '1'
+          - '2'
+          - '3'
+    SignUpUserRegisterUserRequest:
+      title: SignUpUserRegisterUserRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Ramesh
+        email: ramesh@gmail.com
+        password: secret
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Recipes
+    description: ''
+  - name: Auth
+    description: ''
